@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoStore - Tu Tienda en Línea</title>
+    
+    <!-- Tailwind CSS para el diseño -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons para iconos bonitos -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Script de Blokko Checkout -->
+    <script src="https://blokko.io/eComm/vPOS/MX/payment-button.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Animación suave para cuando se añade algo al carrito */
+        @keyframes pulse-cart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); color: #14b8a6; }
+            100% { transform: scale(1); }
+        }
+        .animate-cart {
+            animation: pulse-cart 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Contenido Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row gap-8">
+        
+        <!-- Sección de Productos (Izquierda) -->
+        <div class="w-full lg:w-2/3">
+            <div class="flex items-center gap-3 mb-2">
+                <i data-lucide="hexagon" class="text-brand-600 h-10 w-10"></i>
+                <h1 class="font-extrabold text-4xl tracking-tight text-gray-900">CryptoStore</h1>
+            </div>
+            <p class="text-gray-500 mb-8">Equípate con la mejor tecnología pagando con Stable Coins, APMs y Crypto.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                
+                <!-- Producto 1 -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-shadow border border-gray-100 group">
+                    <!-- Placeholder de Imagen -->
+                    <div class="w-full h-48 bg-gray-100 rounded-xl mb-4 flex items-center justify-center overflow-hidden relative">
+                        <i data-lucide="headphones" class="w-12 h-12 text-gray-300 group-hover:scale-110 transition-transform"></i>
+                        <img src="headphones.png" class="absolute inset-0 w-full h-full object-cover" />
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg leading-tight">Auriculares Pro X</h3>
+                        <span class="bg-brand-50 text-brand-600 text-xs font-bold px-2 py-1 rounded-full border border-brand-100">Stock</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-2">Cancelación de ruido activa y sonido de alta fidelidad para tus sesiones largas.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-xl font-extrabold text-gray-900">$10.99</span>
+                        <div class="flex items-center gap-2">
+                            <button id="trash-p1" onclick="removeFromCart(10.99, 'p1')" class="opacity-50 pointer-events-none bg-gray-100 text-gray-400 p-2 rounded-xl transition-all flex items-center justify-center">
+                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                            </button>
+                            <span id="count-p1" class="font-bold text-gray-700 min-w-[20px] text-center hidden">0</span>
+                            <button onclick="addToCart(10.99, 'p1')" class="bg-gray-900 hover:bg-brand-600 text-white p-2 rounded-xl transition-colors flex items-center justify-center shadow-md hover:shadow-lg">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-shadow border border-gray-100 group">
+                    <div class="w-full h-48 bg-gray-100 rounded-xl mb-4 flex items-center justify-center overflow-hidden relative">
+                        <i data-lucide="keyboard" class="w-12 h-12 text-gray-300 group-hover:scale-110 transition-transform"></i>
+			 <img src="teclado.png" class="absolute inset-0 w-full h-full object-cover" />
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg leading-tight">Teclado Mecánico RGB</h3>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-2">Switches táctiles y retroiluminación personalizable tecla por tecla.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-xl font-extrabold text-gray-900">$1.00</span>
+                        <div class="flex items-center gap-2">
+                            <button id="trash-p2" onclick="removeFromCart(1.00, 'p2')" class="opacity-50 pointer-events-none bg-gray-100 text-gray-400 p-2 rounded-xl transition-all flex items-center justify-center">
+                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                            </button>
+                            <span id="count-p2" class="font-bold text-gray-700 min-w-[20px] text-center hidden">0</span>
+                            <button onclick="addToCart(1.00, 'p2')" class="bg-gray-900 hover:bg-brand-600 text-white p-2 rounded-xl transition-colors flex items-center justify-center shadow-md hover:shadow-lg">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-shadow border border-gray-100 group">
+                    <div class="w-full h-48 bg-gray-100 rounded-xl mb-4 flex items-center justify-center overflow-hidden relative">
+                        <i data-lucide="mouse" class="w-12 h-12 text-gray-300 group-hover:scale-110 transition-transform"></i>
+			<img src="mouse.png" class="absolute inset-0 w-full h-full object-cover" />
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg leading-tight">Mouse Gaming Ligero</h3>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-2">Precisión absoluta con sensor óptico de 25K DPI y diseño ultraligero.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-xl font-extrabold text-gray-900">$65.00</span>
+                        <div class="flex items-center gap-2">
+                            <button id="trash-p3" onclick="removeFromCart(65.00, 'p3')" class="opacity-50 pointer-events-none bg-gray-100 text-gray-400 p-2 rounded-xl transition-all flex items-center justify-center">
+                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                            </button>
+                            <span id="count-p3" class="font-bold text-gray-700 min-w-[20px] text-center hidden">0</span>
+                            <button onclick="addToCart(65.00, 'p3')" class="bg-gray-900 hover:bg-brand-600 text-white p-2 rounded-xl transition-colors flex items-center justify-center shadow-md hover:shadow-lg">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl transition-shadow border border-gray-100 group">
+                    <div class="w-full h-48 bg-gray-100 rounded-xl mb-4 flex items-center justify-center overflow-hidden relative">
+                        <i data-lucide="monitor" class="w-12 h-12 text-gray-300 group-hover:scale-110 transition-transform"></i>
+			<img src="monitor.png" class="absolute inset-0 w-full h-full object-cover" />
+                    </div>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg leading-tight">Monitor Ultrawide 34"</h3>
+                        <span class="bg-orange-50 text-orange-600 text-xs font-bold px-2 py-1 rounded-full border border-orange-100">Hot</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-2">Sumérgete en el juego con una tasa de refresco de 144Hz y colores vibrantes.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-xl font-extrabold text-gray-900">$450.00</span>
+                        <div class="flex items-center gap-2">
+                            <button id="trash-p4" onclick="removeFromCart(450.00, 'p4')" class="opacity-50 pointer-events-none bg-gray-100 text-gray-400 p-2 rounded-xl transition-all flex items-center justify-center">
+                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                            </button>
+                            <span id="count-p4" class="font-bold text-gray-700 min-w-[20px] text-center hidden">0</span>
+                            <button onclick="addToCart(450.00, 'p4')" class="bg-gray-900 hover:bg-brand-600 text-white p-2 rounded-xl transition-colors flex items-center justify-center shadow-md hover:shadow-lg">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Sección de Resumen y Checkout (Derecha) -->
+        <div class="w-full lg:w-1/3">
+            <div class="bg-white p-6 rounded-3xl shadow-xl border border-gray-100 sticky top-12">
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center justify-between">
+                    <span class="flex items-center gap-2">
+                        <i data-lucide="receipt" class="w-5 h-5 text-brand-500"></i>
+                        Resumen de Compra
+                    </span>
+                    <!-- El icono del carrito -->
+                    <div class="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-full transition-all duration-300 border border-gray-100" id="cart-icon-container">
+                        <i data-lucide="shopping-cart" class="w-4 h-4 text-gray-600"></i>
+                        <span id="cart-count" class="font-semibold text-sm text-brand-600">0</span>
+                    </div>
+                </h2>
+                
+                <div class="space-y-4 mb-6">
+                    <div class="flex justify-between text-gray-500">
+                        <span>Subtotal</span>
+                        <span id="subtotal-label">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-gray-500">
+                        <span>Envío</span>
+                        <span class="text-green-500 font-medium">Gratis</span>
+                    </div>
+                    <div class="border-t border-gray-100 pt-4 flex justify-between items-center">
+                        <span class="text-lg font-bold text-gray-900">Total a pagar</span>
+                        <span id="total-label" class="text-3xl font-extrabold text-brand-600">$0.00</span>
+                    </div>
+                </div>
+
+                <!-- Contenedor del Botón Blokko -->
+                <div id="checkout-action" class="mt-8 transition-opacity duration-500 opacity-50 pointer-events-none">
+                    <p class="text-center text-xs text-gray-400 mb-3">Paga seguro con Crypto</p>
+                    
+                    <!-- Código del botón Blokko integrado -->
+                    <div style="text-align: center;" class="flex justify-center">
+                        <img
+                            id="blokko-pay-button"
+                            src="blokko_button.png"
+                            alt="Pagar con Blokko"
+                            ping="https://webhook.site/b3683843-9e40-4bba-bdb2-7fe3669ed57a"
+                            data-amount="0.00"
+                            data-merchant-id="M46006331651146"
+                            data-merchant-reference=""
+                            data-acquirer-id="MX46"
+                            style="cursor: pointer; max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);"
+                            class="hover:-translate-y-1 transition-transform"
+                        />
+                    </div>
+                </div>
+                
+                <!-- Mensaje cuando el carrito está vacío -->
+                <p id="empty-cart-msg" class="text-center text-sm text-gray-400 mt-4">
+                    Agrega productos al carrito para continuar.
+                </p>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Inicializar iconos
+        lucide.createIcons();
+
+        // Variables de estado
+        let totalAmount = 0;
+        let itemsCount = 0;
+        
+        // Estado individual de cada producto para evitar eliminar si está en 0
+        let cartState = {
+            'p1': 0,
+            'p2': 0,
+            'p3': 0,
+            'p4': 0
+        };
+
+        // Referencias al DOM
+        const totalLabel = document.getElementById('total-label');
+        const subtotalLabel = document.getElementById('subtotal-label');
+        const cartCount = document.getElementById('cart-count');
+        const cartContainer = document.getElementById('cart-icon-container');
+        const payButton = document.getElementById('blokko-pay-button');
+        const checkoutAction = document.getElementById('checkout-action');
+        const emptyCartMsg = document.getElementById('empty-cart-msg');
+
+        // Inicialización principal
+        function initCheckout() {
+            // Generar UUID aleatorio al cargar la página para la transacción
+            const referenceUUID = crypto.randomUUID();
+            payButton.setAttribute('data-merchant-reference', referenceUUID);
+            console.log("UUID de transacción generado:", referenceUUID);
+        }
+
+        // Función para agregar al carrito
+        function addToCart(price, productId) {
+            cartState[productId]++;
+            totalAmount += price;
+            itemsCount++;
+
+            animateCart();
+            updateUI();
+            updateProductUI(productId);
+        }
+
+        // Función para eliminar del carrito
+        function removeFromCart(price, productId) {
+            if (cartState[productId] > 0) {
+                cartState[productId]--;
+                totalAmount -= price;
+                itemsCount--;
+                
+                // Evitamos números negativos por precisión de punto flotante en JS
+                if (totalAmount < 0.01) totalAmount = 0;
+
+                animateCart();
+                updateUI();
+                updateProductUI(productId);
+            }
+        }
+
+        // Animación del icono del carrito
+        function animateCart() {
+            cartContainer.classList.remove('animate-cart');
+            void cartContainer.offsetWidth; // Trigger reflow para reiniciar animación
+            cartContainer.classList.add('animate-cart');
+        }
+
+        // Actualizar los botones visuales del producto específico
+        function updateProductUI(productId) {
+            const trashBtn = document.getElementById(`trash-${productId}`);
+            const countIndicator = document.getElementById(`count-${productId}`);
+            
+            if (cartState[productId] > 0) {
+                // Encender el bote de basura
+                trashBtn.classList.remove('opacity-50', 'pointer-events-none', 'bg-gray-100', 'text-gray-400');
+                trashBtn.classList.add('bg-red-50', 'text-red-600', 'shadow-sm', 'hover:bg-red-100');
+                
+                // Mostrar número de items
+                if(countIndicator) {
+                    countIndicator.classList.remove('hidden');
+                    countIndicator.innerText = cartState[productId];
+                }
+            } else {
+                // Apagar el bote de basura
+                trashBtn.classList.add('opacity-50', 'pointer-events-none', 'bg-gray-100', 'text-gray-400');
+                trashBtn.classList.remove('bg-red-50', 'text-red-600', 'shadow-sm', 'hover:bg-red-100');
+                
+                // Ocultar número de items
+                if(countIndicator) {
+                    countIndicator.classList.add('hidden');
+                }
+            }
+        }
+
+        // Función para actualizar la interfaz general y los datos del botón
+        function updateUI() {
+            // Formatear a 2 decimales
+            const formattedTotal = totalAmount.toFixed(2);
+
+            // Actualizar Labels en pantalla
+            totalLabel.innerText = `$${formattedTotal}`;
+            subtotalLabel.innerText = `$${formattedTotal}`;
+            cartCount.innerText = itemsCount;
+
+            // Actualizar el atributo data-amount del botón Blokko
+            payButton.setAttribute('data-amount', formattedTotal);
+            console.log(`Carrito actualizado. Total: $${formattedTotal}. Atributo data-amount listo.`);
+
+            // Mostrar u ocultar el área de pago
+            if (totalAmount > 0) {
+                checkoutAction.classList.remove('opacity-50', 'pointer-events-none');
+                emptyCartMsg.style.display = 'none';
+            } else {
+                checkoutAction.classList.add('opacity-50', 'pointer-events-none');
+                emptyCartMsg.style.display = 'block';
+            }
+        }
+
+        // Ejecutar inicialización al cargar la página
+        window.addEventListener('DOMContentLoaded', initCheckout);
+    </script>
+</body>
+</html>
